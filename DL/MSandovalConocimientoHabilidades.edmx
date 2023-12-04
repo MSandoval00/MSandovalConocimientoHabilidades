@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MSandovalConicimientoHabilidadesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Medicamentos">
+          <Key>
+            <PropertyRef Name="IdMedicamento" />
+          </Key>
+          <Property Name="IdMedicamento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Precio" Type="float" Nullable="false" />
+          <Property Name="NombreMedicamento" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="Total" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdRol" Type="int" />
+        </EntityType>
+        <EntityType Name="UsuarioMedicamento">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdMedicamento" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdMedicamento" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__UsuarioMe__IdMed__173876EA">
+          <End Role="Medicamentos" Type="Self.Medicamentos" Multiplicity="1" />
+          <End Role="UsuarioMedicamento" Type="Self.UsuarioMedicamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicamentos">
+              <PropertyRef Name="IdMedicamento" />
+            </Principal>
+            <Dependent Role="UsuarioMedicamento">
+              <PropertyRef Name="IdMedicamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioMe__IdUsu__164452B1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioMedicamento" Type="Self.UsuarioMedicamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioMedicamento">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="MedicamentoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Precio" Type="float" Mode="In" />
+          <Parameter Name="NombreMedicamento" Type="varchar" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Total" Type="float" Mode="In" />
+        </Function>
+        <Function Name="MedicamentoDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdMedicamento" Type="int" Mode="In" />
+        </Function>
+        <Function Name="MedicamentoGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="MedicamentoGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdMedicamento" Type="int" Mode="In" />
+        </Function>
+        <Function Name="MedicamentoUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdMedicamento" Type="int" Mode="In" />
+          <Parameter Name="Precio" Type="float" Mode="In" />
+          <Parameter Name="NombreMedicamento" Type="varchar" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Total" Type="float" Mode="In" />
+        </Function>
+        <Function Name="UsuarioAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UsuarioDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UsuarioGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UsuarioGetByEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UsuarioGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UsuarioUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="MSandovalConicimientoHabilidadesModelStoreContainer">
+          <EntitySet Name="Medicamentos" EntityType="Self.Medicamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioMedicamento" EntityType="Self.UsuarioMedicamento" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UsuarioMe__IdMed__173876EA" Association="Self.FK__UsuarioMe__IdMed__173876EA">
+            <End Role="Medicamentos" EntitySet="Medicamentos" />
+            <End Role="UsuarioMedicamento" EntitySet="UsuarioMedicamento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioMe__IdUsu__164452B1" Association="Self.FK__UsuarioMe__IdUsu__164452B1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioMedicamento" EntitySet="UsuarioMedicamento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MSandovalConicimientoHabilidadesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Medicamento">
+          <Key>
+            <PropertyRef Name="IdMedicamento" />
+          </Key>
+          <Property Name="IdMedicamento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <Property Name="NombreMedicamento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.UsuarioMedicamento" FromRole="Medicamentos" ToRole="Usuario" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Medicamentos" Relationship="Self.UsuarioMedicamento" FromRole="Usuario" ToRole="Medicamentos" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRol" Type="Int32" />
+        </EntityType>
+        <Association Name="UsuarioMedicamento">
+          <End Role="Medicamentos" Type="Self.Medicamento" Multiplicity="*" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MSandovalConicimientoHabilidadesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Medicamentos" EntityType="Self.Medicamento" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="UsuarioMedicamento" Association="Self.UsuarioMedicamento">
+            <End Role="Medicamentos" EntitySet="Medicamentos" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <FunctionImport Name="UsuarioAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
+            <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UsuarioGetAll" ReturnType="Collection(MSandovalConicimientoHabilidadesModel.UsuarioGetAll_Result)" />
+          <FunctionImport Name="UsuarioGetById" ReturnType="Collection(MSandovalConicimientoHabilidadesModel.UsuarioGetById_Result)">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UsuarioDelete">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UsuarioUpdate">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
+            <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MedicamentoGetAll" ReturnType="Collection(MSandovalConicimientoHabilidadesModel.MedicamentoGetAll_Result)" />
+          <FunctionImport Name="MedicamentoAdd">
+            <Parameter Name="Precio" Mode="In" Type="Double" />
+            <Parameter Name="NombreMedicamento" Mode="In" Type="String" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="MedicamentoDelete">
+          <Parameter Name="IdMedicamento" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MedicamentoUpdate">
+            <Parameter Name="IdMedicamento" Mode="In" Type="Int32" />
+            <Parameter Name="Precio" Mode="In" Type="Double" />
+            <Parameter Name="NombreMedicamento" Mode="In" Type="String" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="MedicamentoGetById" ReturnType="Collection(MSandovalConicimientoHabilidadesModel.MedicamentoGetById_Result)">
+          <Parameter Name="IdMedicamento" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UsuarioGetByEmail" ReturnType="Collection(MSandovalConicimientoHabilidadesModel.UsuarioGetByEmail_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="UsuarioGetAll_Result">
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="NombreUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UsuarioGetById_Result">
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="NombreUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="MedicamentoGetAll_Result">
+          <Property Type="Int32" Name="IdMedicamento" Nullable="false" />
+          <Property Type="Double" Name="Precio" Nullable="false" />
+          <Property Type="String" Name="NombreMedicamento" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+          <Property Type="Double" Name="Total" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="MedicamentoGetById_Result">
+          <Property Type="Int32" Name="IdMedicamento" Nullable="false" />
+          <Property Type="Double" Name="Precio" Nullable="false" />
+          <Property Type="String" Name="NombreMedicamento" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+          <Property Type="Double" Name="Total" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UsuarioGetByEmail_Result">
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdRol" Nullable="false" />
+          <Property Type="String" Name="NombreRol" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MSandovalConicimientoHabilidadesModelStoreContainer" CdmEntityContainer="MSandovalConicimientoHabilidadesEntities">
+          <EntitySetMapping Name="Medicamentos">
+            <EntityTypeMapping TypeName="MSandovalConicimientoHabilidadesModel.Medicamento">
+              <MappingFragment StoreEntitySet="Medicamentos">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdMedicamento" ColumnName="IdMedicamento" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="NombreMedicamento" ColumnName="NombreMedicamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="MSandovalConicimientoHabilidadesModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsuarioMedicamento" TypeName="MSandovalConicimientoHabilidadesModel.UsuarioMedicamento" StoreEntitySet="UsuarioMedicamento">
+            <EndProperty Name="Medicamentos">
+              <ScalarProperty Name="IdMedicamento" ColumnName="IdMedicamento" />
+            </EndProperty>
+            <EndProperty Name="Usuario">
+              <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="UsuarioAdd" FunctionName="MSandovalConicimientoHabilidadesModel.Store.UsuarioAdd" />
+          <FunctionImportMapping FunctionImportName="UsuarioGetAll" FunctionName="MSandovalConicimientoHabilidadesModel.Store.UsuarioGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MSandovalConicimientoHabilidadesModel.UsuarioGetAll_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UsuarioGetById" FunctionName="MSandovalConicimientoHabilidadesModel.Store.UsuarioGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MSandovalConicimientoHabilidadesModel.UsuarioGetById_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UsuarioDelete" FunctionName="MSandovalConicimientoHabilidadesModel.Store.UsuarioDelete" />
+          <FunctionImportMapping FunctionImportName="UsuarioUpdate" FunctionName="MSandovalConicimientoHabilidadesModel.Store.UsuarioUpdate" />
+          <FunctionImportMapping FunctionImportName="MedicamentoGetAll" FunctionName="MSandovalConicimientoHabilidadesModel.Store.MedicamentoGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MSandovalConicimientoHabilidadesModel.MedicamentoGetAll_Result">
+                <ScalarProperty Name="IdMedicamento" ColumnName="IdMedicamento" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="NombreMedicamento" ColumnName="NombreMedicamento" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MedicamentoAdd" FunctionName="MSandovalConicimientoHabilidadesModel.Store.MedicamentoAdd" />
+          <FunctionImportMapping FunctionImportName="MedicamentoDelete" FunctionName="MSandovalConicimientoHabilidadesModel.Store.MedicamentoDelete" />
+          <FunctionImportMapping FunctionImportName="MedicamentoUpdate" FunctionName="MSandovalConicimientoHabilidadesModel.Store.MedicamentoUpdate" />
+          <FunctionImportMapping FunctionImportName="MedicamentoGetById" FunctionName="MSandovalConicimientoHabilidadesModel.Store.MedicamentoGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MSandovalConicimientoHabilidadesModel.MedicamentoGetById_Result">
+                <ScalarProperty Name="IdMedicamento" ColumnName="IdMedicamento" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="NombreMedicamento" ColumnName="NombreMedicamento" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UsuarioGetByEmail" FunctionName="MSandovalConicimientoHabilidadesModel.Store.UsuarioGetByEmail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MSandovalConicimientoHabilidadesModel.UsuarioGetByEmail_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

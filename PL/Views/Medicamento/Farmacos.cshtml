@@ -1,0 +1,62 @@
+﻿@model ML.Venta
+@{
+    ViewBag.Title = "Farmacos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2>Farmacos seleccionados</h2>
+    </div>
+</div>
+<div class="col-md-12 text-center">
+    <div class="card-price">
+        <button type="button" class="btn btn-primary" onclick="limpiar();"><i class="fa-solid fa-eraser"></i> Limpiar</button>
+        <a href="@Url.Action("GetAll","Medicamento")" class="btn btn-danger"> <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i> Regresar</a>
+    </div>
+</div>
+
+<br />
+<hr />
+<div class="container">
+    <div class="row">
+        @if (Model.ListaMedicamentos==null || Model.ListaMedicamentos.Count==0)
+        {
+            <div class="alert alert-warning" role="alert">
+                Aún no tienes medicamentos agregados.
+            </div>
+            }
+            else
+            {
+    <table>
+        <thead>
+            <tr class="text-center">
+                <td>SKU Medicamento</td>
+                <td>Nombre del Medicamento</td>
+                <td>Cantidad Disponible</td>
+                <td>Precio</td>
+                <td>Piezas a comprar</td>
+                <td>Eliminar medicamento</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Medicamento medicamento in Model.ListaMedicamentos)
+            {
+                <tr id="fila-@medicamento.IdMedicamento" class="text-center">
+                    <td>@medicamento.IdMedicamento</td>
+                    <td>@medicamento.NombreMedicamento</td>
+                    <td>@medicamento.Cantidad</td>
+                    <td>@medicamento.Precio</td>
+                    <td>hola va input</td>
+                    <td><button class="btn btn-danger" onclick="eliminarFila(@medicamento.IdMedicamento)"><span class="glyphicon glyphicon-plus"></span></button></td>
+                </tr>
+            }
+
+        </tbody>
+        
+    </table>
+            }
+    </div>
+</div>
+
+

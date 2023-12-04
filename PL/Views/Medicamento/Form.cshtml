@@ -1,0 +1,47 @@
+﻿@model ML.Medicamento
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Registrar medicamento</h2>
+<hr />
+<div class="container">
+    @using (Html.BeginForm("Form", "Medicamento", FormMethod.Post, new {enctype="multipart/form-control"}))
+    {
+    <div class="row">
+        @Html.HiddenFor(model=>Model.IdMedicamento)
+        <div class="col-md-3">
+            @Html.LabelFor(Model=>Model.NombreMedicamento)
+            @Html.TextBoxFor(Model=>Model.NombreMedicamento, new {@class="form-control"})
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(Model=>Model.Precio)
+            @Html.TextBoxFor(Model=>Model.Precio,new {@class="form-control", @id="txtPrecio", @oninput = "ResultadoMedicamento();" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(Model=>Model.Cantidad)
+            @Html.TextBoxFor(Model => Model.Cantidad, new {@class="form-control",@id="txtCantidad",@oninput= "ResultadoMedicamento();" })
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(Model=>Model.Total)
+            @Html.TextBoxFor(Model =>Model.Total , new {@class="form-control", @readonly = "readonly" ,@id="txtTotal"})
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <input type="submit" class="btn btn-success" value="Guardar"/>
+        <a href="@Url.Action("GetAll","Medicamento")" class="btn btn-danger">Regresar</a>
+    </div>
+    }
+</div>
+<script type="text/javascript">
+    function ResultadoMedicamento() {
+        let cantidad = document.getElementById("txtCantidad").value;
+        let precio = document.getElementById("txtPrecio").value;
+        let resultado = precio * cantidad;
+        document.getElementById("txtTotal").value = resultado;
+    }
+
+</script>
+
