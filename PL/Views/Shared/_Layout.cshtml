@@ -8,6 +8,12 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @{
+        var nombre = Context.Session["Nombre"] as string;
+        var apellidoPaterno = Context.Session["ApellidoPaterno"] as string;
+        var apellidoMaterno = Context.Session["ApellidoMaterno"] as string;
+        var NombreRol = Context.Session["NombreRol"] as string;
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -22,11 +28,23 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     <li>@Html.ActionLink("Usuarios", "GetAll", "Usuario")</li>
                     <li>@Html.ActionLink("Medicamentos", "GetAll", "Medicamento")</li>
-                    @*<li>@Html.ActionLink("Iniciar sesión", "Login", "Medicamento")</li>*@
-                    
+                    @{
+                        var session = Session["ListaMedicamentos"];
+                    }
+                    @if (session == null)
+                    {
+                        <li>@Html.ActionLink("Medicamentos()", "Farmacos", "Medicamento")</li>
+                    }
+                    else
+                    {
+                        var MedicamentoSession = Newtonsoft.Json.JsonConvert.DeserializeObject<List<object>>(session.ToString());
+                        <li>@Html.ActionLink($"Medicamentos({MedicamentoSession.Count})", "Farmacos", "Medicamento")</li>
+                    }
+                    <li>@Html.ActionLink("Iniciar sesión", "Login", "Usuario")</li>
+
                 </ul>
             </div>
         </div>

@@ -10,16 +10,16 @@
 namespace DL
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class UsuarioGetByEmail_Result
+    public partial class UsuarioMedicamento
     {
         public int IdUsuario { get; set; }
-        public string NombreUsuario { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public int IdRol { get; set; }
-        public string NombreRol { get; set; }
+        public int IdMedicamento { get; set; }
+        public Nullable<int> Piezas { get; set; }
+        public double Total { get; set; }
+    
+        public virtual Medicamento Medicamento { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

@@ -142,6 +142,13 @@ namespace PL.Controllers
             if (result.Correct)
             {
                 ML.Usuario usuario = (ML.Usuario)result.Object;
+                Session["IdUsuario"] = usuario.IdUsuario;
+                Session["Nombre"] = usuario.Nombre;
+                Session["ApellidoPaterno"] = usuario.ApellidoPaterno;
+                Session["ApellidoMaterno"] = usuario.ApellidoMaterno;
+                Session["NombreRol"] = usuario.Rol.Nombre;
+
+
                 if (password==usuario.Password)
                 {
                     return RedirectToAction("Index", "Home");

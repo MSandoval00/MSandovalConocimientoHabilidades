@@ -168,3 +168,46 @@ Rol.Nombre AS NombreRol
 FROM Usuario
 INNER JOIN Rol ON(Usuario.IdRol=Rol.IdRol)
 WHERE Email=@Email
+
+ALTER TABLE UsuarioMedicamento
+ADD Piezas INT 
+
+ALTER TABLE UsuarioMedicamento
+ADD Total FLOAT
+
+ALTER TABLE UsuarioMedicamento
+ALTER COLUMN Total FLOAT NOT NULL
+
+CREATE PROCEDURE AddUsuarioMedicamentos
+@IdUsuario INT,
+@IdMedicamento INT,
+@Piezas INT,
+@Total INT
+AS
+INSERT INTO UsuarioMedicamento(IdUsuario,
+IdMedicamento,
+Piezas,
+Total
+)VALUES(@IdUsuario,
+@IdMedicamento,
+@Piezas,
+@Total)
+
+CREATE PROCEDURE MedicamentoUpdateCantidad
+@IdMedicamento INT,
+@Cantidad INT
+AS
+UPDATE Medicamentos
+SET 
+Cantidad=@Cantidad
+WHERE IdMedicamento=@IdMedicamento
+
+CREATE PROCEDURE UsuarioMedicamentoAdd 1,2,5,20 
+@IdUsuario INT,
+@IdMedicamento INT,
+@Piezas INT,
+@Total INT
+AS
+INSERT INTO UsuarioMedicamento(
+IdUsuario,IdMedicamento,Piezas,Total)VALUES(
+@IdUsuario,@IdMedicamento,@Piezas,@Total)

@@ -76,6 +76,9 @@
       <DependentUpon>MSandovalConocimientoHabilidades.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rol.cs">
+      <DependentUpon>MSandovalConocimientoHabilidades.tt</DependentUpon>
+    </Compile>
     <Compile Include="Usuario.cs">
       <DependentUpon>MSandovalConocimientoHabilidades.tt</DependentUpon>
     </Compile>
@@ -88,34 +91,35 @@
     <Compile Include="UsuarioGetById_Result.cs">
       <DependentUpon>MSandovalConocimientoHabilidades.tt</DependentUpon>
     </Compile>
+    <Compile Include="UsuarioMedicamento.cs">
+      <DependentUpon>MSandovalConocimientoHabilidades.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="MSandovalConocimientoHabilidades.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MSandovalConocimientoHabilidades.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="MSandovalConocimientoHabilidades.edmx.diagram">
       <DependentUpon>MSandovalConocimientoHabilidades.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="MSandovalConocimientoHabilidades.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MSandovalConocimientoHabilidades.Context.cs</LastGenOutput>
       <DependentUpon>MSandovalConocimientoHabilidades.edmx</DependentUpon>
+      <LastGenOutput>MSandovalConocimientoHabilidades.Context.cs</LastGenOutput>
     </Content>
     <Content Include="MSandovalConocimientoHabilidades.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MSandovalConocimientoHabilidades.edmx</DependentUpon>
       <LastGenOutput>MSandovalConocimientoHabilidades.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

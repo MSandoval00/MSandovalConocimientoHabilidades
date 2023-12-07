@@ -12,21 +12,18 @@ namespace DL
     using System;
     using System.Collections.Generic;
     
-    public partial class Medicamento
+    public partial class Rol
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Medicamento()
+        public Rol()
         {
-            this.UsuarioMedicamentoes = new HashSet<UsuarioMedicamento>();
+            this.Usuarios = new HashSet<Usuario>();
         }
     
-        public int IdMedicamento { get; set; }
-        public double Precio { get; set; }
-        public string NombreMedicamento { get; set; }
-        public Nullable<int> Cantidad { get; set; }
-        public double Total { get; set; }
+        public int IdRol { get; set; }
+        public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioMedicamento> UsuarioMedicamentoes { get; set; }
+        public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

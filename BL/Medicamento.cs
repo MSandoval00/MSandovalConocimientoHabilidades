@@ -13,7 +13,7 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.MedicamentoGetAll().ToList();
                     result.Objects=new List<object>();
@@ -52,9 +52,9 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
-                    var query=context.MedicamentoGetById(IdMedicamento).FirstOrDefault();
+                    var query=context.MedicamentoGetById(IdMedicamento).Single();
                     if (query!=null)
                     {
                         ML.Medicamento medicamento = new ML.Medicamento();
@@ -81,7 +81,7 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.MedicamentoAdd(medicamento.Precio, medicamento.NombreMedicamento, medicamento.Cantidad, medicamento.Total);
                     if (query>0)
@@ -103,12 +103,40 @@ namespace BL
             }
             return result;
         }
+        public static ML.Result UsuarioMedicamentoAdd(ML.Medicamento medicamento, ML.Usuario usuario)
+        {
+            
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
+                {
+                    var query = context.UsuarioMedicamentoAdd(usuario.IdUsuario, medicamento.IdMedicamento, medicamento.Cantidad,medicamento.Total);
+                    if (query>0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct=false;
+                        result.ErrorMessage = "No se pudo agregar el medicamento";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage=ex.Message;
+                result.Ex=ex;
+            }
+            return result;
+        }
         public static ML.Result Update(ML.Medicamento medicamento)
         {
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.MedicamentoUpdate(medicamento.IdMedicamento, medicamento.Precio, medicamento.NombreMedicamento, medicamento.Cantidad, medicamento.Total);
                     if (query>0)
@@ -130,12 +158,40 @@ namespace BL
             }
             return result;
         }
+        public static ML.Result UpdateMedicamentoCantidad(ML.Medicamento medicamento)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
+                {
+                    var query = context.MedicamentoUpdateCantidad(medicamento.IdMedicamento, medicamento.Piezas);
+                    if (query>0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "No se pudo actualizar la cantidad del medicamento";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result.Correct = false;
+                result.ErrorMessage=ex.Message;
+                result.Ex = ex;
+            }
+            return result;
+        }
         public static ML.Result Delete(int IdMedicamento)
         {
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.MedicamentoDelete(IdMedicamento);
                     if (query>0)

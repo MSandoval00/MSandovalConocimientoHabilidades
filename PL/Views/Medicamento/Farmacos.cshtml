@@ -3,14 +3,22 @@
     ViewBag.Title = "Farmacos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{ 
+    var nombre = Context.Session["Nombre"] as string;
+    var apellidoPaterno = Context.Session["ApellidoPaterno"] as string;
+    var apellidoMaterno = Context.Session["ApellidoMaterno"] as string;
+    var nombreCompleto = nombre+ " " + apellidoPaterno+ " " + apellidoMaterno;
+    var IdUsuario = Context.Session["IdUsuario"];
+}
 <div class="container">
     <div class="row">
         <h2>Farmacos seleccionados</h2>
+        <h2>Bienvenido @nombreCompleto</h2>
     </div>
 </div>
 <div class="col-md-12 text-center">
     <div class="card-price">
+        
         <button type="button" class="btn btn-primary" onclick="limpiar();"><i class="fa-solid fa-eraser"></i> Limpiar</button>
         <a href="@Url.Action("GetAll","Medicamento")" class="btn btn-danger"> <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i> Regresar</a>
     </div>
@@ -20,43 +28,97 @@
 <hr />
 <div class="container">
     <div class="row">
-        @if (Model.ListaMedicamentos==null || Model.ListaMedicamentos.Count==0)
+        @if (Model.ListaMedicamentos == null || Model.ListaMedicamentos.Count == 0)
         {
             <div class="alert alert-warning" role="alert">
                 Aún no tienes medicamentos agregados.
             </div>
-            }
-            else
+        }
+        else
+        {
+            using (Html.BeginForm("GeneratePDF", "Medicamento",FormMethod.Post, new {enctype="multipart/form-data"}))
             {
-    <table>
-        <thead>
-            <tr class="text-center">
-                <td>SKU Medicamento</td>
-                <td>Nombre del Medicamento</td>
-                <td>Cantidad Disponible</td>
-                <td>Precio</td>
-                <td>Piezas a comprar</td>
-                <td>Eliminar medicamento</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (ML.Medicamento medicamento in Model.ListaMedicamentos)
-            {
-                <tr id="fila-@medicamento.IdMedicamento" class="text-center">
-                    <td>@medicamento.IdMedicamento</td>
-                    <td>@medicamento.NombreMedicamento</td>
-                    <td>@medicamento.Cantidad</td>
-                    <td>@medicamento.Precio</td>
-                    <td>hola va input</td>
-                    <td><button class="btn btn-danger" onclick="eliminarFila(@medicamento.IdMedicamento)"><span class="glyphicon glyphicon-plus"></span></button></td>
-                </tr>
-            }
+                @Html.HiddenFor(model=>nombreCompleto)
+                @Html.HiddenFor(model=>IdUsuario)
+            <table class="table table-bordered" style="background:#3c3c3c; color:aliceblue;">
+                <thead>
+                    <tr class="text-center">
+                        <td>SKU Medicamento</td>
+                        <td>Nombre del Medicamento</td>
+                        <td>Cantidad Disponible</td>
+                        <td>Precio</td>
+                        @*<td>Disminuir</td>*@
+                        <td>Piezas a comprar</td>
+                        @*<td>Aumentar</td>*@
+                        <td>Eliminar medicamento</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Medicamento medicamento in Model.ListaMedicamentos)
+                    {
+                        <tr id="fila-@medicamento.IdMedicamento" class="text-center">
+                            <td>@medicamento.IdMedicamento</td>
+                            <td>@medicamento.NombreMedicamento</td>
+                            <td>@medicamento.Cantidad</td>
+                            <td class="precio">@medicamento.Precio</td>
+                            @*<td>
+                                <button id="btnResta" onclick="RestarPiezas();" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </td>*@
+                            <td>
+                                <input class="form-control" style="width:50px;height:50px;" type="text" id="lblPiezas" name="Piezas" value="@medicamento.Piezas" />
+                            </td>
+                            @*<td>
+                                <button class="btn btn-success" onclick="SumarPiezas();">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </td>*@
+                            <td><button class="btn btn-danger" onclick="eliminarFila(@medicamento.IdMedicamento)"><span class="glyphicon glyphicon-trash"></span></button></td>
+                        </tr>
+                    }
 
-        </tbody>
-        
-    </table>
+                </tbody>
+
+            </table>
+            <label>Total: $<span id="Total"></span></label>
+            <button class="btn btn-danger"><span class="glyphicon glyphicon-save"></span>Generar PDF</button>
+            @*<a class="btn btn-danger" href="@Url.Action("GeneratePDF")"><span class="glyphicon glyphicon-save"></span> Generar Reporte</a>*@
             }
+        }
     </div>
 </div>
+<script type="text/javascript">
+    //var clicks = 1;
+    //function SumarPiezas() {
+    //    clicks += 1;
+    //    document.getElementById("lblPiezas").value = clicks;
+    //    document.getElementById("btnSuma").value = "0";
+    //}
+    //function RestarPiezas() {
+    //    if (clicks > 0) clicks -= 1;
+    //    document.getElementById("lblPiezas").value = clicks;
+    //}
+    document.addEventListener("DOMContentLoaded", function () {
+        calcularTotal();
+    });
+    function eliminarFila(id) {
+        var fila = document.getElementById("fila-" + id);
+        fila.remove();
+        calcularTotal();
+    }
+    function calcularTotal() {
+        var filas = document.querySelectorAll(".table tbody tr");
+        var total = 0;
+
+        filas.forEach(function (fila) {
+            var precio = parseFloat(fila.querySelector(".precio").textContent);
+            let cantidad = document.getElementById("lblPiezas").value;
+           /* var cantidad = parseInt(fila.querySelector("td:nth-child(5)").textContent);*/
+            total += precio * cantidad;
+        });
+        document.getElementById("Total").textContent = total.toFixed(2);
+    }
+</script>
 
 

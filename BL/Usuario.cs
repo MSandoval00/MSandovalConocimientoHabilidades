@@ -13,7 +13,7 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.UsuarioGetAll().ToList();
                     result.Objects = new List<object>();
@@ -52,7 +52,7 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.UsuarioGetById(IdUsuario).First();
                     ML.Usuario usuario=new ML.Usuario();
@@ -82,7 +82,7 @@ namespace BL
             ML.Result result=new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.UsuarioAdd(usuario.Nombre, usuario.ApellidoPaterno, usuario.ApellidoMaterno);
                     if (query>0)
@@ -109,7 +109,7 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.UsuarioUpdate(usuario.IdUsuario,usuario.Nombre,usuario.ApellidoPaterno,usuario.ApellidoMaterno);
                     if (query>0)
@@ -136,7 +136,7 @@ namespace BL
             ML.Result result=new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.UsuarioDelete(IdUsuario);
                     if (query>0)
@@ -163,15 +163,21 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-                using (DL.MSandovalConicimientoHabilidadesEntities context=new DL.MSandovalConicimientoHabilidadesEntities())
+                using (DL.MSandovalConicimientoHabilidadesEntities1 context=new DL.MSandovalConicimientoHabilidadesEntities1())
                 {
                     var query = context.UsuarioGetByEmail(email).First();
                     if (query!=null)
                     {
                         ML.Usuario usuario=new ML.Usuario();
+                        usuario.Rol=new ML.Rol();
                         usuario.IdUsuario = query.IdUsuario;
+                        usuario.Nombre = query.NombreUsuario;
+                        usuario.ApellidoPaterno = query.ApellidoPaterno;
+                        usuario.ApellidoMaterno = query.ApellidoMaterno;
                         usuario.Email = query.Email;
                         usuario.Password = query.Password;
+                        usuario.Rol.IdRol= query.IdRol;
+                        usuario.Rol.Nombre = query.NombreRol;
                         result.Object=usuario;
                         result.Correct=true;
                     }

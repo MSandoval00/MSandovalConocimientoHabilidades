@@ -17,7 +17,7 @@ namespace DL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
-            this.Medicamentos = new HashSet<Medicamento>();
+            this.UsuarioMedicamentoes = new HashSet<UsuarioMedicamento>();
         }
     
         public int IdUsuario { get; set; }
@@ -28,7 +28,8 @@ namespace DL
         public string Password { get; set; }
         public Nullable<int> IdRol { get; set; }
     
+        public virtual Rol Rol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Medicamento> Medicamentos { get; set; }
+        public virtual ICollection<UsuarioMedicamento> UsuarioMedicamentoes { get; set; }
     }
 }

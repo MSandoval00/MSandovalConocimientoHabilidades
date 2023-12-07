@@ -15,10 +15,10 @@ namespace DL
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class MSandovalConicimientoHabilidadesEntities : DbContext
+    public partial class MSandovalConicimientoHabilidadesEntities1 : DbContext
     {
-        public MSandovalConicimientoHabilidadesEntities()
-            : base("name=MSandovalConicimientoHabilidadesEntities")
+        public MSandovalConicimientoHabilidadesEntities1()
+            : base("name=MSandovalConicimientoHabilidadesEntities1")
         {
         }
     
@@ -28,73 +28,9 @@ namespace DL
         }
     
         public virtual DbSet<Medicamento> Medicamentos { get; set; }
+        public virtual DbSet<Rol> Rols { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
-    
-        public virtual int UsuarioAdd(string nombre, string apellidoPaterno, string apellidoMaterno)
-        {
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var apellidoPaternoParameter = apellidoPaterno != null ?
-                new ObjectParameter("ApellidoPaterno", apellidoPaterno) :
-                new ObjectParameter("ApellidoPaterno", typeof(string));
-    
-            var apellidoMaternoParameter = apellidoMaterno != null ?
-                new ObjectParameter("ApellidoMaterno", apellidoMaterno) :
-                new ObjectParameter("ApellidoMaterno", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UsuarioAdd", nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter);
-        }
-    
-        public virtual ObjectResult<UsuarioGetAll_Result> UsuarioGetAll()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UsuarioGetAll_Result>("UsuarioGetAll");
-        }
-    
-        public virtual ObjectResult<UsuarioGetById_Result> UsuarioGetById(Nullable<int> idUsuario)
-        {
-            var idUsuarioParameter = idUsuario.HasValue ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UsuarioGetById_Result>("UsuarioGetById", idUsuarioParameter);
-        }
-    
-        public virtual int UsuarioDelete(Nullable<int> idUsuario)
-        {
-            var idUsuarioParameter = idUsuario.HasValue ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UsuarioDelete", idUsuarioParameter);
-        }
-    
-        public virtual int UsuarioUpdate(Nullable<int> idUsuario, string nombre, string apellidoPaterno, string apellidoMaterno)
-        {
-            var idUsuarioParameter = idUsuario.HasValue ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(int));
-    
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var apellidoPaternoParameter = apellidoPaterno != null ?
-                new ObjectParameter("ApellidoPaterno", apellidoPaterno) :
-                new ObjectParameter("ApellidoPaterno", typeof(string));
-    
-            var apellidoMaternoParameter = apellidoMaterno != null ?
-                new ObjectParameter("ApellidoMaterno", apellidoMaterno) :
-                new ObjectParameter("ApellidoMaterno", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UsuarioUpdate", idUsuarioParameter, nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter);
-        }
-    
-        public virtual ObjectResult<MedicamentoGetAll_Result> MedicamentoGetAll()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MedicamentoGetAll_Result>("MedicamentoGetAll");
-        }
+        public virtual DbSet<UsuarioMedicamento> UsuarioMedicamentoes { get; set; }
     
         public virtual int MedicamentoAdd(Nullable<double> precio, string nombreMedicamento, Nullable<int> cantidad, Nullable<double> total)
         {
@@ -126,6 +62,20 @@ namespace DL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MedicamentoDelete", idMedicamentoParameter);
         }
     
+        public virtual ObjectResult<MedicamentoGetAll_Result> MedicamentoGetAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MedicamentoGetAll_Result>("MedicamentoGetAll");
+        }
+    
+        public virtual ObjectResult<MedicamentoGetById_Result> MedicamentoGetById(Nullable<int> idMedicamento)
+        {
+            var idMedicamentoParameter = idMedicamento.HasValue ?
+                new ObjectParameter("IdMedicamento", idMedicamento) :
+                new ObjectParameter("IdMedicamento", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MedicamentoGetById_Result>("MedicamentoGetById", idMedicamentoParameter);
+        }
+    
         public virtual int MedicamentoUpdate(Nullable<int> idMedicamento, Nullable<double> precio, string nombreMedicamento, Nullable<int> cantidad, Nullable<double> total)
         {
             var idMedicamentoParameter = idMedicamento.HasValue ?
@@ -151,13 +101,48 @@ namespace DL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MedicamentoUpdate", idMedicamentoParameter, precioParameter, nombreMedicamentoParameter, cantidadParameter, totalParameter);
         }
     
-        public virtual ObjectResult<MedicamentoGetById_Result> MedicamentoGetById(Nullable<int> idMedicamento)
+        public virtual int MedicamentoUpdateCantidad(Nullable<int> idMedicamento, Nullable<int> cantidad)
         {
             var idMedicamentoParameter = idMedicamento.HasValue ?
                 new ObjectParameter("IdMedicamento", idMedicamento) :
                 new ObjectParameter("IdMedicamento", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MedicamentoGetById_Result>("MedicamentoGetById", idMedicamentoParameter);
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MedicamentoUpdateCantidad", idMedicamentoParameter, cantidadParameter);
+        }
+    
+        public virtual int UsuarioAdd(string nombre, string apellidoPaterno, string apellidoMaterno)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoPaternoParameter = apellidoPaterno != null ?
+                new ObjectParameter("ApellidoPaterno", apellidoPaterno) :
+                new ObjectParameter("ApellidoPaterno", typeof(string));
+    
+            var apellidoMaternoParameter = apellidoMaterno != null ?
+                new ObjectParameter("ApellidoMaterno", apellidoMaterno) :
+                new ObjectParameter("ApellidoMaterno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UsuarioAdd", nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter);
+        }
+    
+        public virtual int UsuarioDelete(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UsuarioDelete", idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<UsuarioGetAll_Result> UsuarioGetAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UsuarioGetAll_Result>("UsuarioGetAll");
         }
     
         public virtual ObjectResult<UsuarioGetByEmail_Result> UsuarioGetByEmail(string email)
@@ -167,6 +152,57 @@ namespace DL
                 new ObjectParameter("Email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UsuarioGetByEmail_Result>("UsuarioGetByEmail", emailParameter);
+        }
+    
+        public virtual ObjectResult<UsuarioGetById_Result> UsuarioGetById(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UsuarioGetById_Result>("UsuarioGetById", idUsuarioParameter);
+        }
+    
+        public virtual int UsuarioMedicamentoAdd(Nullable<int> idUsuario, Nullable<int> idMedicamento, Nullable<int> piezas, Nullable<double> total)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            var idMedicamentoParameter = idMedicamento.HasValue ?
+                new ObjectParameter("IdMedicamento", idMedicamento) :
+                new ObjectParameter("IdMedicamento", typeof(int));
+    
+            var piezasParameter = piezas.HasValue ?
+                new ObjectParameter("Piezas", piezas) :
+                new ObjectParameter("Piezas", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UsuarioMedicamentoAdd", idUsuarioParameter, idMedicamentoParameter, piezasParameter, totalParameter);
+        }
+    
+        public virtual int UsuarioUpdate(Nullable<int> idUsuario, string nombre, string apellidoPaterno, string apellidoMaterno)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoPaternoParameter = apellidoPaterno != null ?
+                new ObjectParameter("ApellidoPaterno", apellidoPaterno) :
+                new ObjectParameter("ApellidoPaterno", typeof(string));
+    
+            var apellidoMaternoParameter = apellidoMaterno != null ?
+                new ObjectParameter("ApellidoMaterno", apellidoMaterno) :
+                new ObjectParameter("ApellidoMaterno", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UsuarioUpdate", idUsuarioParameter, nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter);
         }
     }
 }

@@ -4,10 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="71a85f707dea44d593f9aa3de4a1423c" Name="Diagram1">
-        <EntityTypeShape EntityType="MSandovalConicimientoHabilidadesModel.Medicamento" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MSandovalConicimientoHabilidadesModel.Usuario" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="MSandovalConicimientoHabilidadesModel.UsuarioMedicamento" ManuallyRouted="false" />
+      <Diagram DiagramId="dff3863f13b04365b3213319aef93c0d" Name="Diagram1">
+        <EntityTypeShape EntityType="MSandovalConicimientoHabilidadesModel.Medicamento" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSandovalConicimientoHabilidadesModel.Rol" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSandovalConicimientoHabilidadesModel.Usuario" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MSandovalConicimientoHabilidadesModel.UsuarioMedicamento" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="MSandovalConicimientoHabilidadesModel.FK__UsuarioMe__IdMed__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="MSandovalConicimientoHabilidadesModel.FK__Usuario__IdRol__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="MSandovalConicimientoHabilidadesModel.FK__UsuarioMe__IdUsu__164452B1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
